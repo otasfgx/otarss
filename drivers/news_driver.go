@@ -2,13 +2,15 @@ package drivers
 
 import (
 	"context"
+	"fmt"
+	"os"
 	"rss/adapters/controllers"
 
 	"github.com/labstack/echo"
 )
 
 type News interface {
-	Run(ctx context.Context, port string)
+	Run(ctx context.Context)
 }
 
 type NewsDriver struct {
@@ -23,7 +25,7 @@ func NewNewsDriver(echo *echo.Echo, controller controllers.News) News {
 	}
 }
 
-func (driver *NewsDriver) Run(ctx context.Context, port string) {
+func (driver *NewsDriver) Run(ctx context.Context) {
 	driver.echo.POST("/", driver.controller.GetNews(ctx))
-	driver.echo.Logger.Fatal(driver.echo.Start(port))
+	driver.echo.Logger.Fatal(driver.echo.Start(fmt.Sprintf(":%s", os.Getenv("PORT"))))
 }

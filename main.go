@@ -13,5 +13,5 @@ func main() {
 		fmt.Printf("failed to create NewsDriver: %s\n", err)
 	}
 
-	newsDriver.Run(ctx, ":8080")
+	newsDriver.Run(ctx)
 }
